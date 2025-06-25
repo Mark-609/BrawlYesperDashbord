@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Online Players</title>
+  <style>
+    body {
+      background: transparent;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #player-box {
+      background-color: #0b0f2b;
+      padding: 30px 40px;
+      border-radius: 20px;
+      width: 1000px; /* Width */
+      color: white;
+      text-align: center;
+      /* Removed box-shadow */
+    }
+
+    #player-count {
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .player-icon {
+      width: 30px;
+      height: 30px;
+      background: url('https://img.icons8.com/ios-filled/50/ffffff/user.png') no-repeat center;
+      background-size: contain;
+    }
+
+    #bar-wrapper {
+      width: 100%;
+      background: #11193a;
+      border-radius: 10px;
+      height: 20px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    #bar-fill {
+      height: 100%;
+      width: 0%;
+      background: #00ff66;
+      transition: width 0.4s ease;
+    }
+  </style>
+</head>
+<body>
+
+<div id="player-box">
+  <div id="player-count">
+    <div class="player-icon"></div>
+    <span id="player-number">Loading...</span>
+  </div>
+  <div id="bar-wrapper">
+    <div id="bar-fill"></div>
+  </div>
+</div>
+
+<script>
+  const playerNumber = document.getElementById('player-number');
+  const barFill = document.getElementById('bar-fill');
+
+  const SUPABASE_URL = 'https://rubjfiddthlkltvbcsnb.supabase.co';
+  const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1YmpmaWRkdGhsa2x0dmJjc25iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3NzI0NTIsImV4cCI6MjA2NjM0ODQ1Mn0.T9C7i_chQ2BAt9o4ZOACSjlgJV_v1hS5Jn6zZtbWiGw';
+  const TABLE_NAME = 'players_online'; // Replace with your actual table name
+
+  fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=id`, {
+    headers: {
+      'apikey': SUPABASE_API_KEY,
+      'Authorization': `Bearer ${SUPABASE_API_KEY}`
+    }
+  })
+  .then(response => {
+    if (!response.ok) throw new Error('Network response was not ok');
+    return response.json();
+  })
+  .then(data => {
+    const count = data.length;
+    playerNumber.textContent = `${count} player${count === 1 ? '' : 's'} online`;
+    // No max, just use count * 5% for example or dynamic scaling
+    // Let's say each player adds 5% width (adjust as needed)
+    const widthPercent = count * 5;
+    barFill.style.width = `${widthPercent}%`;
+  })
+  .catch(err => {
+    playerNumber.textContent = 'Error fetching player count';
+    console.error(err);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Server Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      background: #ffffff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      gap: 40px;
+    }
+
+    .top-row {
+      display: flex;
+      gap: 60px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    iframe {
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .server-embed {
+      width: 510px;
+      height: 260px;
+    }
+
+    .bar-embed {
+      width: 1100px;
+      height: 135px; /* Updated height */
+    }
+
+    #dashboard {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    #login {
+      margin-top: 100px;
+      text-align: center;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: none;
+      background-color: #0b0f2b;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="login">
+    <h2>Enter Password</h2>
+    <input type="password" id="passwordInput" placeholder="Password" />
+    <br />
+    <button onclick="checkPassword()">Login</button>
+    <p id="error" style="color: red;"></p>
+  </div>
+
+  <div id="dashboard">
+    <div class="top-row">
+      <iframe class="server-embed" src="server1.html"></iframe>
+      <iframe class="server-embed" src="server2.html"></iframe>
+    </div>
+
+    <iframe class="bar-embed" src="players.html"></iframe>
+
+    <iframe class="bar-embed" src="accounts.html"></iframe>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const correctPassword = "BrawlYesperKaas1235";
+      const input = document.getElementById("passwordInput").value;
+      const error = document.getElementById("error");
+      if (input === correctPassword) {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("dashboard").style.display = "flex";
+      } else {
+        error.textContent = "Incorrect password.";
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Server 2 (Saves) - Test Mode</title>
+  <style>
+    body {
+      background: transparent;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #status-box {
+      background-color: #0b0f2b;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #status-text {
+      font-size: 2em;
+      font-weight: bold;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .indicator {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: orange;
+    }
+
+    #health-box {
+      margin-top: 30px;
+      background-color: #11193a;
+      padding: 16px 30px;
+      border-radius: 12px;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: orange;
+    }
+  </style>
+</head>
+<body>
+
+<div id="status-box">
+  <div id="status-text">
+    Server 2 (Saves)
+    <div class="indicator"></div>
+  </div>
+  <div id="health-box">In Test Mode</div>
+</div>
+
+</body>
+</html>

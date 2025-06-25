@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Accounts Created</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .counter-container {
+      background-color: #0b0f2b;
+      color: white;
+      padding: 25px;
+      width: 1080px;
+      border-radius: 20px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
+
+    .progress-background {
+      background-color: #1f2a4a;
+      height: 20px; /* Updated height */
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar {
+      background-color: #0099ff;
+      height: 100%;
+      width: 0;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      transition: width 0.3s ease;
+    }
+
+    .count-label {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      font-size: 13px;
+      line-height: 20px; /* Matches new height */
+      font-weight: bold;
+      color: white;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="counter-container">
+    <div class="title">Accounts Created</div>
+    <div class="progress-background">
+      <div class="bar" id="bar"></div>
+      <div class="count-label" id="label">Loading...</div>
+    </div>
+  </div>
+
+  <script>
+    const supabase = supabase.createClient(
+      'https://bsjvvsfggqucovimbtub.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzanZ2c2ZnZ3F1Y292aW1idHViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkyMTg3OTcsImV4cCI6MjA2NDc5NDc5N30.enXUXKZtR9-JVG8h6SRmobo_Jk6d1i8-lBHysgYh1-M'
+    );
+
+    const bar = document.getElementById('bar');
+    const label = document.getElementById('label');
+
+    const MAX_USERS = 100;
+
+    async function updateCount() {
+      const { count, error } = await supabase
+        .from('public_users')
+        .select('*', { count: 'exact', head: true });
+
+      if (error) {
+        label.textContent = 'Error';
+        bar.style.backgroundColor = 'darkred';
+        console.error(error);
+        return;
+      }
+
+      const percentage = Math.min((count / MAX_USERS) * 100, 100);
+      bar.style.width = `${percentage}%`;
+      label.textContent = `${count} / ${MAX_USERS} users`;
+    }
+
+    updateCount();
+    setInterval(updateCount, 5000);
+  </script>
+</body>
+</html>
